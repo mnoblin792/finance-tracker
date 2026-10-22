@@ -50,8 +50,7 @@ If your application requires specific environment variables or external configur
 
 ```bash
 export APP_PORT=8080
-export DB_PASSWORD=your_secure_password
-java -jar target/your-app-name-1.0.0.jar
+java -jar target/finance-tracker-1.0.0.jar
 ```
 
 ## Running Tests
@@ -72,3 +71,28 @@ To execute the test suite (JUnit/TestNG), run:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Project Structure
+
+Structure for source files contained in `src/main/java/`
+```
+com.marknoblin.financetracker
+│
+├── FinanceTrackerApplication.java         # Root class
+│
+├── config/                    # Global security, CORS, bean definitions [0.6.11, 0.6.13]
+├── controller/                # REST endpoints (@RestController) [0.6.2, 0.6.13]
+├── dto/                       # Request/Response payloads (Java Records) [0.6.2, 0.6.13]
+├── entity/                    # Database models (@Entity) [0.6.5, 0.6.13]
+├── exception/                 # Global exception handlers (@ControllerAdvice) [0.6.5, 0.6.13]
+├── repository/                # Spring Data DB access interfaces [0.6.2, 0.6.13]
+└── service/                   # Core business logic [0.6.2, 0.6.13]
+```
+
+Configuration structure contained in `src/main/resources/`
+```
+resources
+├──application.yml             # Base application configuration
+├──application-dev.yml         # Configuration values for development profile
+└──application-prod.yml        # Configuration values for production profile
+```
