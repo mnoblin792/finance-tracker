@@ -93,7 +93,7 @@ public class TransactionControllerTest {
         inputTransaction.setDate(LocalDate.now());
 
         Transaction expectedTransaction = new Transaction();
-        expectedTransaction.setId(3L);
+        expectedTransaction.setId(1L);
         expectedTransaction.setDescription("Bought Laptop");
         expectedTransaction.setAmount(BigDecimal.valueOf(500.0));
         expectedTransaction.setType(TransactionType.EXPENSE);
@@ -107,7 +107,7 @@ public class TransactionControllerTest {
                         .characterEncoding("utf-8")
                         .content(objectMapper.writeValueAsString(inputTransaction)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(3)))
+                .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.description", is("Bought Laptop")))
                 .andExpect(jsonPath("$.amount", is(500.0)))
                 .andExpect(jsonPath("$.type", is("EXPENSE")))

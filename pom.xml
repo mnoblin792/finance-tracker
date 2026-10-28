@@ -81,7 +81,36 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.16</version> <!-- Use the latest stable version -->
+                <executions>
+                    <!-- Prepares the property pointing to the JaCoCo runtime agent -->
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!-- Creates the code coverage report after tests run -->
+                    <execution>
+                        <configuration>
+                            <excludes>
+                                <exclude>com/marknoblin/financetracker/FinanceTrackerApplication.class</exclude>
+                                <exclude>com/marknoblin/financetracker/dto/**/*.class</exclude>
+                                <exclude>com/marknoblin/financetrackery/config/*.class</exclude>
+                            </excludes>
+                        </configuration>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
 </project>
