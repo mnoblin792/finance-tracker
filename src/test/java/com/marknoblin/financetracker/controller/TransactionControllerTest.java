@@ -58,7 +58,7 @@ public class TransactionControllerTest {
         Transaction t2 = new Transaction();
         t2.setId(2L);
         t2.setDescription("Paycheck");
-        t2.setAmount(BigDecimal.valueOf(300.00));
+        t2.setAmount(BigDecimal.valueOf(500.00));
         t2.setType(TransactionType.INCOME);
         t2.setCategory("Paycheck");
         t2.setDate(LocalDate.now());
@@ -77,7 +77,7 @@ public class TransactionControllerTest {
                 .andExpect(jsonPath("$[0].date", is(LocalDate.now().toString())))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].description", is("Paycheck")))
-                .andExpect(jsonPath("$[1].amount", is(300.0)))
+                .andExpect(jsonPath("$[1].amount", is(500.0)))
                 .andExpect(jsonPath("$[1].type", is("INCOME")))
                 .andExpect(jsonPath("$[1].category", is("Paycheck")))
                 .andExpect(jsonPath("$[1].date", is(LocalDate.now().toString())));
@@ -114,5 +114,29 @@ public class TransactionControllerTest {
                 .andExpect(jsonPath("$.category", is("Electronics")))
                 .andExpect(jsonPath("$.date", is(LocalDate.now().toString())));
 
+    }
+
+    @Test
+    void shouldGetBalance() throws Exception {
+        BigDecimal expectedBalance = BigDecimal.valueOf(200.00);
+
+        Mockito.when(transactionService.getNetBalance()).thenReturn(expectedBalance);
+
+        mockMvc.perform(get("/api/transactions/balance")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(200.0)));
+    }
+
+    @Test
+    void shouldDeleteTransactionById() throws Exception {
+        Long transactionId = 1L;
+
+        Mockito.doNothing().when(transactionService).deleteTransaction(transactionId);
+
+        mockMvc.perform(delete("/api/transactions/{id}", transactionId))
+                .andExpect(status().isNoContent());
+
+        Mockito.verify(transactionService, Mockito.times(1)).deleteTransaction(transactionId);
     }
 }
